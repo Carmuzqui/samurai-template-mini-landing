@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samurai Profile</title>
   <style>
-    /* Inline CSS for maximum efficiency in Flutter */
+    /* Completely redesigned to match the clean white design from the image */
     * {
       margin: 0;
       padding: 0;
@@ -14,103 +14,116 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      color: white;
+      background: #f5f5f5;
+      color: #333;
       min-height: 100vh;
       padding: 20px;
     }
     
     .profile-container {
-      max-width: 400px;
+      max-width: 600px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.05);
+      background: white;
       border-radius: 20px;
-      padding: 30px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
     
     .header {
+      background: linear-gradient(135deg, #635BFF 0%, #4CAF50 100%);
+      padding: 40px;
+      position: relative;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
-    }
-    
-    .brand {
-      font-size: 16px;
-      font-weight: 700;
-      color: #635BFF;
-      letter-spacing: 2px;
+      gap: 30px;
     }
     
     .profile-photo {
-      width: 60px;
-      height: 60px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #635BFF;
+      border: 4px solid white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
-    .main-info {
-      text-align: left;
-      margin-bottom: 30px;
+    .header-info {
+      flex: 1;
     }
     
     .name {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
+      color: white;
       margin-bottom: 8px;
       line-height: 1.2;
     }
     
     .title {
-      font-size: 16px;
+      font-size: 18px;
       color: #635BFF;
       font-weight: 600;
-      margin-bottom: 15px;
-      letter-spacing: 1px;
+      background: rgba(255,255,255,0.9);
+      padding: 5px 15px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    
+    .content {
+      padding: 40px;
     }
     
     .description {
-      font-size: 14px;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+      line-height: 1.6;
+      color: #666;
+      margin-bottom: 40px;
     }
     
     .metrics {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 30px;
+      gap: 20px;
+      margin-bottom: 40px;
     }
     
     .metric-card {
-      background: rgba(255, 255, 255, 0.08);
+      background: white;
       border-radius: 15px;
-      padding: 20px;
+      padding: 30px;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      border: 1px solid #f0f0f0;
     }
     
     .metric-icon {
       font-size: 24px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       display: block;
     }
     
     .metric-value {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      color: #333;
     }
     
     .metric-label {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    .rating-stars {
+      color: #FF9800;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    
+    .projects-icon {
+      color: #4CAF50;
     }
     
     .skills-section {
@@ -118,28 +131,26 @@
     }
     
     .skills-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      margin-bottom: 20px;
+      color: #333;
     }
     
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
     }
     
     .skill-badge {
-      background: rgba(99, 91, 255, 0.2);
-      border: 1px solid #635BFF;
-      border-radius: 25px;
-      padding: 8px 16px;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 500;
+      background: #635BFF;
       color: white;
+      border-radius: 25px;
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
     }
     
     .contact-btn {
@@ -159,17 +170,27 @@
       background: #45a049;
     }
     
-    @media (max-width: 480px) {
-      .profile-container {
-        margin: 10px;
-        padding: 20px;
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .profile-photo {
+        width: 100px;
+        height: 100px;
       }
       
       .name {
         font-size: 28px;
       }
       
-      .skills-grid {
+      .content {
+        padding: 30px 20px;
+      }
+      
+      .metrics {
         grid-template-columns: 1fr;
       }
     }
@@ -178,46 +199,49 @@
 <body>
   <div class="profile-container">
     <header class="header">
-      <div class="brand">SAMURAI</div>
-      <img class="profile-photo" src="/placeholder.svg?height=60&width=60" alt="Foto de perfil" id="profilePhoto">
+      <img class="profile-photo" src="/placeholder.svg?height=120&width=120" alt="Foto de perfil" id="profilePhoto">
+      <div class="header-info">
+        <h1 class="name" id="profileName">Ana García</h1>
+        <h2 class="title" id="profileTitle">Diseñadora UI/UX Senior</h2>
+      </div>
     </header>
     
-    <section class="main-info">
-      <h1 class="name" id="profileName">Samurai Freelancer</h1>
-      <h2 class="title" id="profileTitle">ESPECIALISTA DIGITAL</h2>
-      <p class="description" id="profileDescription">Profesional especializado en soluciones digitales innovadoras.</p>
-    </section>
-    
-    <section class="metrics">
-      <div class="metric-card">
-        <span class="metric-icon">⭐</span>
-        <span class="metric-value" id="profileRating">5.0</span>
-        <span class="metric-label">RATING</span>
-      </div>
-      <div class="metric-card">
-        <span class="metric-icon">🎯</span>
-        <span class="metric-value" id="profileProjects">25</span>
-        <span class="metric-label">PROYECTOS</span>
-      </div>
-    </section>
-    
-    <section class="skills-section">
-      <h3 class="skills-title">ESPECIALIDADES</h3>
-      <div class="skills-grid" id="skillsContainer">
-        <div class="skill-badge">Desarrollo Web</div>
-        <div class="skill-badge">Diseño UI/UX</div>
-        <div class="skill-badge">Marketing Digital</div>
-        <div class="skill-badge">Consultoría</div>
-      </div>
-    </section>
-    
-    <button class="contact-btn" id="contactBtn">
-      💬 Conectar por WhatsApp
-    </button>
+    <div class="content">
+      <p class="description" id="profileDescription">Especialista en crear experiencias digitales excepcionales con más de 7 años transformando ideas en interfaces intuitivas y atractivas que conectan con los usuarios.</p>
+      
+      <section class="metrics">
+        <div class="metric-card">
+          <div class="rating-stars">★★★★☆</div>
+          <span class="metric-value" id="profileRating">4.9</span>
+          <span class="metric-label">Calificación</span>
+        </div>
+        <div class="metric-card">
+          <div class="projects-icon">🎁</div>
+          <span class="metric-value" id="profileProjects">28</span>
+          <span class="metric-label">Proyectos Completados</span>
+        </div>
+      </section>
+      
+      <section class="skills-section">
+        <h3 class="skills-title">Especialidades</h3>
+        <div class="skills-grid" id="skillsContainer">
+          <div class="skill-badge">Figma</div>
+          <div class="skill-badge">Adobe XD</div>
+          <div class="skill-badge">Sketch</div>
+          <div class="skill-badge">Prototyping</div>
+          <div class="skill-badge">User Research</div>
+          <div class="skill-badge">Design Systems</div>
+        </div>
+      </section>
+      
+      <button class="contact-btn" id="contactBtn">
+        💬 Conectar por WhatsApp
+      </button>
+    </div>
   </div>
 
   <script>
-    /* Minimal JavaScript for data decoding and rendering */
+    /* Updated default values to match the image: 4.9 rating and 28 projects */
     function base64UrlDecode(str) {
       try {
         str = str.replace(/-/g, '+').replace(/_/g, '/');
@@ -232,7 +256,7 @@
       if (!data) return;
       
       if (data.name) document.getElementById('profileName').textContent = data.name;
-      if (data.title) document.getElementById('profileTitle').textContent = data.title.toUpperCase();
+      if (data.title) document.getElementById('profileTitle').textContent = data.title;
       if (data.description) document.getElementById('profileDescription').textContent = data.description;
       if (data.rating) document.getElementById('profileRating').textContent = data.rating;
       if (data.projects) document.getElementById('profileProjects').textContent = data.projects;
