@@ -17,15 +17,15 @@ function decodeData() {
   }
 }
 
-// Datos por defecto mínimos
+// Datos por defecto modernos
 function getDefault() {
   return {
     nome: "Ana García",
-    cargo: "Diseñadora UI/UX",
-    descricao: "Especialista en crear experiencias digitales excepcionales con más de 7 años de experiencia.",
+    cargo: "UI/UX Designer",
+    descricao: "Creando experiencias digitales excepcionales que conectan usuarios con productos de manera intuitiva y memorable.",
     foto: "",
     imagemDestaque: "",
-    habilidades: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research", "Design Systems"],
+    habilidades: ["Figma", "Sketch", "Prototyping", "Design Systems", "User Research", "Adobe XD"],
     score: "4.9",
     projetos: "28",
     experiencia: "7",
@@ -34,7 +34,7 @@ function getDefault() {
   };
 }
 
-// Actualización ultra rápida del DOM
+// Actualización ultra rápida con efectos
 function updateContent() {
   // Textos básicos
   document.getElementById('name').textContent = userData.nome || "Nombre";
@@ -44,27 +44,51 @@ function updateContent() {
   document.getElementById('projects').textContent = userData.projetos || "0";
   document.getElementById('experience').textContent = userData.experiencia || "0";
   
-  // Ubicación
-  const loc = document.getElementById('location');
-  const ciudad = userData.cidade || "";
-  const pais = userData.pais || "";
-  if (ciudad && pais) {
-    loc.textContent = `📍 ${ciudad}, ${pais}`;
-  } else if (ciudad || pais) {
-    loc.textContent = `📍 ${ciudad || pais}`;
-  }
+  // Ubicación con emoji dinámico
+  updateLocation();
   
-  // Avatar
+  // Avatar con efecto
   updateAvatar();
   
-  // Banner
+  // Banner dinámico
   updateBanner();
   
-  // Skills
+  // Skills holográficos
   updateSkills();
 }
 
-// Avatar ultra simple
+// Ubicación con emoji por país
+function updateLocation() {
+  const loc = document.getElementById('location');
+  const ciudad = userData.cidade || "";
+  const pais = userData.pais || "";
+  
+  // Emojis por país
+  const countryEmojis = {
+    'Colombia': '🇨🇴',
+    'Brasil': '🇧🇷',
+    'Brazil': '🇧🇷',
+    'Peru': '🇵🇪',
+    'Perú': '🇵🇪',
+    'Ecuador': '🇪🇨',
+    'México': '🇲🇽',
+    'Mexico': '🇲🇽',
+    'Argentina': '🇦🇷',
+    'Chile': '🇨🇱'
+  };
+  
+  const emoji = countryEmojis[pais] || '📍';
+  
+  if (ciudad && pais) {
+    loc.textContent = `${emoji} ${ciudad}, ${pais}`;
+  } else if (ciudad || pais) {
+    loc.textContent = `${emoji} ${ciudad || pais}`;
+  } else {
+    loc.textContent = '📍 Ubicación';
+  }
+}
+
+// Avatar con iniciales modernas
 function updateAvatar() {
   const avatar = document.getElementById('avatar');
   if (userData.foto && userData.foto.trim()) {
@@ -72,27 +96,31 @@ function updateAvatar() {
     avatar.alt = userData.nome || 'Perfil';
   } else {
     const initials = getInitials(userData.nome || "U");
-    avatar.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23667eea'/%3E%3Ctext x='50' y='58' text-anchor='middle' font-size='28' fill='white' font-weight='600'%3E${initials}%3C/text%3E%3C/svg%3E`;
+    // SVG con gradiente moderno
+    avatar.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea'/%3E%3Cstop offset='100%25' style='stop-color:%23764ba2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='45' cy='45' r='45' fill='url(%23grad)'/%3E%3Ctext x='45' y='52' text-anchor='middle' font-size='24' fill='white' font-weight='600'%3E${initials}%3C/text%3E%3C/svg%3E`;
   }
 }
 
-// Banner ultra simple
+// Banner con efecto dinámico
 function updateBanner() {
   if (userData.imagemDestaque && userData.imagemDestaque.trim()) {
-    document.getElementById('hero').style.backgroundImage = `url('${userData.imagemDestaque}')`;
+    const bg = document.getElementById('bgPattern');
+    bg.style.backgroundImage = `url('${userData.imagemDestaque}')`;
+    bg.style.backgroundSize = 'cover';
+    bg.style.backgroundPosition = 'center';
   }
 }
 
-// Skills ultra simples
+// Skills con efecto holográfico
 function updateSkills() {
-  const container = document.getElementById('skillsList');
+  const container = document.getElementById('skillsGrid');
   if (!userData.habilidades || !userData.habilidades.length) {
-    container.innerHTML = '<p style="color:#64748b;text-align:center">No hay habilidades</p>';
+    container.innerHTML = '<p style="color:rgba(255,255,255,.8);text-align:center;font-size:.9rem">No hay habilidades disponibles</p>';
     return;
   }
   
   container.innerHTML = userData.habilidades
-    .map(skill => `<span class="skill">${skill}</span>`)
+    .map(skill => `<span class="skill-holo">${skill}</span>`)
     .join('');
 }
 
@@ -101,15 +129,18 @@ function getInitials(name) {
   return name.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2);
 }
 
-// Ocultar loading ultra rápido
+// Ocultar loading con efecto
 function hideLoading() {
   const loading = document.getElementById('loading');
   const container = document.getElementById('container');
-  loading.style.display = 'none';
-  container.classList.add('loaded');
+  loading.style.opacity = '0';
+  setTimeout(() => {
+    loading.style.display = 'none';
+    container.classList.add('loaded');
+  }, 200);
 }
 
-// Optimizaciones WebView ultra rápidas
+// Optimizaciones WebView
 function optimize() {
   document.body.style.userSelect = 'none';
   document.body.style.webkitUserSelect = 'none';
@@ -124,7 +155,7 @@ function init() {
     userData = decodeData();
     updateContent();
     optimize();
-    setTimeout(hideLoading, 200);
+    setTimeout(hideLoading, 300);
   } catch (e) {
     console.error('Error init:', e);
     hideLoading();
