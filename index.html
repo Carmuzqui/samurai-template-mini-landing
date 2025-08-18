@@ -238,13 +238,18 @@
   </div>
 
   <script>
-    /* Updated default values to match the image: 4.9 rating and 28 projects */
     function base64UrlDecode(str) {
       try {
+        // Replace URL-safe characters
         str = str.replace(/-/g, '+').replace(/_/g, '/');
-        while (str.length % 4) str += '=';
-        return JSON.parse(atob(str));
+        // Add padding if needed
+        while (str.length % 4) {
+          str += '=';
+        }
+        const decoded = JSON.parse(atob(str));
+        return decoded;
       } catch (e) {
+        console.error('Error decoding data:', e);
         return null;
       }
     }
@@ -252,17 +257,44 @@
     function renderProfile(data) {
       if (!data) return;
       
+      // Update basic info
       if (data.name) document.getElementById('profileName').textContent = data.name;
       if (data.title) document.getElementById('profileTitle').textContent = data.title;
       if (data.description) document.getElementById('profileDescription').textContent = data.description;
-      if (data.rating) document.getElementById('profileRating').textContent = data.rating;
-      if (data.projects) document.getElementById('profileProjects').textContent = data.projects;
       
-      if (data.photo) {
-        document.getElementById('profilePhoto').src = data.photo;
+      // Update rating with proper star display
+      if (data.rating) {
+        const rating = parseFloat(data.rating);
+        document.getElementById('profileRating').textContent = rating.toFixed(1);
+        
+        // Update stars based on rating
+        const starsContainer = document.querySelector('.rating-stars');
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        let starsHTML = '';
+        
+        for (let i = 0; i < 5; i++) {
+          if (i < fullStars) {
+            starsHTML += '★';
+          } else if (i === fullStars && hasHalfStar) {
+            starsHTML += '☆';
+          } else {
+            starsHTML += '☆';
+          }
+        }
+        starsContainer.innerHTML = starsHTML;
       }
       
-      if (data.skills && Array.isArray(data.skills)) {
+      if (data.projects) document.getElementById('profileProjects').textContent = data.projects;
+      
+      // Update photo
+      if (data.photo) {
+        document.getElementById('profilePhoto').src = data.photo;
+        document.getElementById('profilePhoto').alt = `Foto de ${data.name || 'perfil'}`;
+      }
+      
+      // Update skills
+      if (data.skills && Array.isArray(data.skills) && data.skills.length > 0) {
         const container = document.getElementById('skillsContainer');
         container.innerHTML = '';
         data.skills.forEach(skill => {
@@ -273,21 +305,28 @@
         });
       }
       
+      // Update WhatsApp contact
       if (data.whatsapp) {
         const btn = document.getElementById('contactBtn');
         btn.style.display = 'block';
-        btn.onclick = () => window.open(`https://wa.me/${data.whatsapp}`, '_blank');
+        btn.onclick = () => {
+          const phone = data.whatsapp.replace(/\D/g, ''); // Remove non-digits
+          window.open(`https://wa.me/${phone}`, '_blank');
+        };
       }
     }
 
-    // Load data from URL or use defaults
-    const urlParams = new URLSearchParams(window.location.search);
-    const encodedData = urlParams.get('data');
-    
-    if (encodedData) {
-      const userData = base64UrlDecode(encodedData);
-      renderProfile(userData);
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const encodedData = urlParams.get('data') || urlParams.get('d'); // Support both 'data' and 'd' parameters
+      
+      if (encodedData) {
+        const userData = base64UrlDecode(encodedData);
+        if (userData) {
+          renderProfile(userData);
+        }
+      }
+    });
   </script>
 </body>
 </html>
