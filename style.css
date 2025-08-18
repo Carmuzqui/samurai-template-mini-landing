@@ -1,4 +1,4 @@
-/* Reset and base styles */
+/* Simplified reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -6,205 +6,231 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.6;
-  color: #2c3e50;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #1a1a2e;
   min-height: 100vh;
+  color: #ffffff;
 }
 
-/* Profile Container */
-.profile-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  animation: fadeInUp 0.8s ease;
+/* Simplified container without complex positioning */
+.poster-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
-/* Profile Header */
-.profile-header {
-  background: white;
-  border-radius: 24px;
-  padding: 3rem 2rem;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+/* Simplified content container without backdrop blur and complex shadows */
+.poster-content {
+  max-width: 900px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+}
+
+/* Simplified header without complex grid */
+.poster-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.brand-mark {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #635bff;
+}
+
+.profile-photo-container {
   position: relative;
-  overflow: hidden;
 }
 
-.profile-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
-  background: linear-gradient(135deg, #635bff 0%, #4caf50 100%);
-  z-index: 0;
-}
-
+/* Simplified photo without morphing animation and complex shadows */
 .profile-photo {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  border: 6px solid white;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  position: relative;
-  z-index: 1;
-  margin-bottom: 1.5rem;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  border: 2px solid #635bff;
 }
 
-.profile-photo:hover {
-  transform: scale(1.05);
+/* Simplified main info without gradient text effects */
+.main-info {
+  margin-bottom: 3rem;
+  text-align: left;
 }
 
 .profile-name {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
-  color: #2c3e50;
+  color: #ffffff;
   margin-bottom: 0.5rem;
-  position: relative;
-  z-index: 1;
+  line-height: 1.2;
 }
 
 .profile-title {
-  font-size: 1.4rem;
-  font-weight: 500;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
   color: #635bff;
   margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 1;
+  text-transform: uppercase;
 }
 
 .profile-description {
-  font-size: 1.1rem;
-  color: #666;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
   max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
 }
 
-/* Profile Metrics */
-.profile-metrics {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+/* Simplified metrics without complex hover effects and animations */
+.artistic-metrics {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  justify-content: flex-start;
 }
 
-.metric-item {
-  background: white;
-  padding: 2rem 1.5rem;
-  border-radius: 20px;
+.metric-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
+  min-width: 120px;
 }
 
-.metric-item:hover {
-  transform: translateY(-5px);
-}
-
-.metric-value {
+.metric-icon {
+  font-size: 1.5rem;
   display: block;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #635bff;
   margin-bottom: 0.5rem;
 }
 
-.metric-value.score::after {
-  content: " ★";
-  color: #ff9800;
-  font-size: 2rem;
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 0.25rem;
 }
 
 .metric-label {
-  font-size: 1rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
   font-weight: 500;
 }
 
-/* Profile Skills */
-.profile-skills {
-  background: white;
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+/* Simplified skills section */
+.creative-skills {
+  margin-bottom: 3rem;
+}
+
+.skills-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
   margin-bottom: 2rem;
+  text-transform: uppercase;
 }
 
-.profile-skills h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.skills-grid {
+.skills-artistic-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
+  gap: 1rem;
 }
 
-.skill-badge {
-  background: linear-gradient(135deg, #635bff 0%, #4caf50 100%);
-  color: white;
-  padding: 0.75rem 1.25rem;
-  border-radius: 25px;
+/* Simplified skill badges without complex gradients and animations */
+.skill-badge-artistic {
+  background: rgba(99, 91, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: default;
-  box-shadow: 0 2px 8px rgba(99, 91, 255, 0.3);
 }
 
-.skill-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
-}
-
-/* Profile Contact */
-.profile-contact {
+/* Simplified contact button without complex effects */
+.artistic-contact {
   text-align: center;
 }
 
-.whatsapp-btn {
+.whatsapp-artistic-btn {
   background: #4caf50;
-  color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
+  color: white;
+  padding: 1.2rem 2.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  text-decoration: none;
 }
 
-.whatsapp-btn:hover {
-  background: #45a049;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+.btn-icon {
+  font-size: 1.1rem;
 }
 
-.whatsapp-btn svg {
-  width: 20px;
-  height: 20px;
+/* Simplified responsive design */
+@media (max-width: 768px) {
+  .poster-container {
+    padding: 1rem;
+  }
+
+  .poster-content {
+    padding: 2rem;
+  }
+
+  .poster-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .main-info {
+    text-align: center;
+  }
+
+  .artistic-metrics {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .skills-artistic-grid {
+    justify-content: center;
+  }
 }
 
-/* Loading Animation */
+@media (max-width: 480px) {
+  .poster-content {
+    padding: 1.5rem;
+  }
+
+  .artistic-metrics {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .whatsapp-artistic-btn {
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Simplified loading and error states */
 .loading {
   display: flex;
   justify-content: center;
@@ -214,151 +240,12 @@ body {
   color: #635bff;
 }
 
-.loading::after {
-  content: "";
-  width: 20px;
-  height: 20px;
-  border: 2px solid #635bff;
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  margin-left: 1rem;
-  animation: spin 1s linear infinite;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .profile-container {
-    padding: 1rem 0.5rem;
-  }
-
-  .profile-header {
-    padding: 2rem 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .profile-photo {
-    width: 150px;
-    height: 150px;
-  }
-
-  .profile-name {
-    font-size: 2rem;
-  }
-
-  .profile-title {
-    font-size: 1.2rem;
-  }
-
-  .profile-description {
-    font-size: 1rem;
-  }
-
-  .profile-metrics {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .metric-item {
-    padding: 1.5rem 1rem;
-  }
-
-  .metric-value {
-    font-size: 2rem;
-  }
-
-  .profile-skills {
-    padding: 2rem 1.5rem;
-  }
-
-  .skills-grid {
-    gap: 0.5rem;
-  }
-
-  .skill-badge {
-    padding: 0.6rem 1rem;
-    font-size: 0.85rem;
-  }
-
-  .whatsapp-btn {
-    padding: 0.875rem 1.5rem;
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-header {
-    padding: 1.5rem 1rem;
-  }
-
-  .profile-photo {
-    width: 120px;
-    height: 120px;
-  }
-
-  .profile-name {
-    font-size: 1.75rem;
-  }
-
-  .profile-title {
-    font-size: 1.1rem;
-  }
-
-  .metric-value {
-    font-size: 1.75rem;
-  }
-
-  .profile-skills h3 {
-    font-size: 1.3rem;
-  }
-}
-
-/* Error State */
 .error-message {
-  background: #fff5f5;
-  border: 1px solid #fed7d7;
-  color: #c53030;
-  padding: 1rem;
-  border-radius: 8px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff6b6b;
+  padding: 2rem;
+  border-radius: 15px;
   text-align: center;
-  margin: 1rem 0;
-}
-
-/* Success State */
-.success-message {
-  background: #f0fff4;
-  border: 1px solid #9ae6b4;
-  color: #2f855a;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  margin: 1rem 0;
+  margin: 2rem 0;
 }
