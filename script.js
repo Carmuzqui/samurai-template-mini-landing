@@ -1,14 +1,26 @@
 // Global variables
 let userData = {};
 let isLoaded = false;
+let currentLanguage = 'pt_BR';
 
-// Optimized data decoding with better error handling
+// Optimized data decoding
 function decodeUserData() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const encodedData = urlParams.get("data");
+    const lang = urlParams.get("lang");
+    const userId = urlParams.get("userId");
 
-    console.log('🔍 URL Params:', { encodedData: !!encodedData });
+    console.log('🔍 URL Params:', { 
+      encodedData: !!encodedData, 
+      lang, 
+      userId 
+    });
+
+    // Set language
+    if (lang) {
+      currentLanguage = lang;
+    }
 
     if (!encodedData) {
       console.log("📝 Modo preview - usando datos de ejemplo");
@@ -28,87 +40,143 @@ function decodeUserData() {
 // Default data for preview/fallback
 function getDefaultData() {
   return {
-    nome: "Ana García",
+    nome: "Ana García Rodríguez",
     cargo: "Diseñadora UI/UX Senior",
-    descricao: "Especialista en crear experiencias digitales excepcionales con más de 7 años transformando ideas en interfaces intuitivas y atractivas que conectan con los usuarios.",
-    foto: "https://via.placeholder.com/200/635BFF/FFFFFF?text=AG",
-    habilidades: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research", "Design Systems", "HTML/CSS", "React"],
+    descricao: "Especialista en crear experiencias digitales excepcionales con más de 7 años transformando ideas en interfaces intuitivas y atractivas que conectan con los usuarios y generan resultados extraordinarios.",
+    foto: "",
+    imagemDestaque: "",
+    habilidades: [
+      "Figma", "Adobe XD", "Sketch", "Prototyping", 
+      "User Research", "Design Systems", "HTML/CSS", 
+      "React", "Vue.js", "Responsive Design"
+    ],
     score: "4.9",
     projetos: "28",
+    experiencia: "7",
     whatsapp: "+57 300 123 4567",
+    cidade: "Bogotá",
+    pais: "Colombia"
   };
 }
 
-// Optimized profile rendering with batch DOM updates
-function renderProfile() {
+// Update profile content with optimized DOM operations
+function updateProfileContent() {
   try {
-    console.log('🎨 Renderizando perfil...');
+    console.log('🎨 Actualizando contenido del perfil...');
 
-    // Update profile photo with optimized loading
-    updateProfilePhoto();
-
-    // Batch text updates for better performance
+    // Batch text updates
     const textUpdates = [
-      { selector: '.profile-name', content: userData.nome || "Nombre no disponible" },
-      { selector: '.profile-title', content: userData.cargo || "Cargo no disponible" },
-      { selector: '.profile-description', content: userData.descricao || "Descripción no disponible" }
+      { id: 'profileName', content: userData.nome || "Nombre no disponible" },
+      { id: 'profileTitle', content: userData.cargo || "Título profesional" },
+      { id: 'aboutText', content: userData.descricao || "Descripción no disponible" },
+      { id: 'statScore', content: userData.score || "0" },
+      { id: 'statProjects', content: userData.projetos || "0" },
+      { id: 'statExperience', content: userData.experiencia || "0" }
     ];
 
     textUpdates.forEach(update => {
-      const element = document.querySelector(update.selector);
+      const element = document.getElementById(update.id);
       if (element) {
         element.textContent = update.content;
       }
     });
 
-    // Update metrics
-    updateMetrics();
+    // Update location
+    updateLocation();
 
-    // Render skills with optimized animation
-    renderSkills();
+    // Update images
+    updateProfileImages();
 
-    // Setup WhatsApp contact
-    setupWhatsAppContact();
+    // Update skills
+    updateSkills();
 
-    console.log('✅ Perfil renderizado correctamente');
+    // Update WhatsApp button
+    updateWhatsAppButton();
+
+    console.log('✅ Contenido actualizado correctamente');
   } catch (error) {
-    console.error('❌ Error renderizando perfil:', error);
-    handleError(error);
+    console.error('❌ Error actualizando contenido:', error);
+    showErrorState();
   }
 }
 
-// Optimized photo update with preloading and fallback
-function updateProfilePhoto() {
-  const profilePhoto = document.querySelector(".profile-photo");
-  if (!profilePhoto) return;
+// Update location display
+function updateLocation() {
+  const locationElement = document.getElementById('profileLocation');
+  if (locationElement) {
+    const ciudad = userData.cidade || "";
+    const pais = userData.pais || "";
+    let locationText = "Ubicación";
+    
+    if (ciudad && pais) {
+      locationText = `${ciudad}, ${pais}`;
+    } else if (ciudad) {
+      locationText = ciudad;
+    } else if (pais) {
+      locationText = pais;
+    }
+    
+    const span = locationElement.querySelector('span');
+    if (span) {
+      span.textContent = locationText;
+    }
+  }
+}
+
+// Update profile images with optimized loading
+function updateProfileImages() {
+  updateProfileAvatar();
+  updateHeroBanner();
+}
+
+// Update profile avatar
+function updateProfileAvatar() {
+  const avatarElement = document.getElementById('profileAvatar');
+  if (!avatarElement) return;
 
   if (userData.foto && userData.foto.trim() !== '') {
-    // Preload image for better UX
     const img = new Image();
     img.onload = function() {
-      profilePhoto.src = userData.foto;
-      profilePhoto.alt = `Foto de ${userData.nome || 'perfil'}`;
+      avatarElement.src = userData.foto;
+      avatarElement.alt = `Foto de ${userData.nome || 'perfil'}`;
     };
     img.onerror = function() {
-      console.warn("⚠️ Error cargando foto, usando placeholder");
-      setPlaceholderPhoto(profilePhoto);
+      console.warn("⚠️ Error cargando foto de perfil");
+      setPlaceholderAvatar(avatarElement);
     };
     img.src = userData.foto;
   } else {
-    setPlaceholderPhoto(profilePhoto);
+    setPlaceholderAvatar(avatarElement);
   }
 }
 
-// Set placeholder photo with initials
-function setPlaceholderPhoto(photoElement) {
+// Update hero banner with imagemDestaque
+function updateHeroBanner() {
+  const bannerElement = document.getElementById('heroBanner');
+  if (!bannerElement) return;
+
+  if (userData.imagemDestaque && userData.imagemDestaque.trim() !== '') {
+    const img = new Image();
+    img.onload = function() {
+      bannerElement.style.backgroundImage = `url('${userData.imagemDestaque}')`;
+      console.log('✅ Banner actualizado con imagemDestaque');
+    };
+    img.onerror = function() {
+      console.warn("⚠️ Error cargando imagen de destaque, usando gradiente por defecto");
+    };
+    img.src = userData.imagemDestaque;
+  }
+}
+
+// Set placeholder avatar with initials
+function setPlaceholderAvatar(avatarElement) {
   const name = userData.nome || "Usuario";
   const initials = getInitials(name);
   
-  // Create optimized SVG placeholder
-  const svgPlaceholder = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Ccircle cx='90' cy='90' r='90' fill='%23635bff'/%3E%3Ctext x='90' y='100' text-anchor='middle' font-size='50' fill='white' font-family='Inter, sans-serif' font-weight='600'%3E${initials}%3C/text%3E%3C/svg%3E`;
+  const svgPlaceholder = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='60' fill='%23667eea'/%3E%3Ctext x='60' y='70' text-anchor='middle' font-size='36' fill='white' font-family='Inter, sans-serif' font-weight='600'%3E${initials}%3C/text%3E%3C/svg%3E`;
   
-  photoElement.src = svgPlaceholder;
-  photoElement.alt = `Iniciales de ${name}`;
+  avatarElement.src = svgPlaceholder;
+  avatarElement.alt = `Iniciales de ${name}`;
 }
 
 // Get initials from name
@@ -121,176 +189,142 @@ function getInitials(name) {
     .substring(0, 2);
 }
 
-// Update metrics with validation
-function updateMetrics() {
-  const scoreElement = document.querySelector(".metric-value.score");
-  const projectsElement = document.querySelector(".metric-value.projects");
+// Update skills with staggered animation
+function updateSkills() {
+  const skillsContainer = document.getElementById('skillsGrid');
+  if (!skillsContainer) return;
 
-  if (scoreElement && userData.score) {
-    scoreElement.textContent = userData.score;
-  }
-
-  if (projectsElement && userData.projetos) {
-    projectsElement.textContent = userData.projetos;
-  }
-}
-
-// Optimized skills rendering with staggered animation
-function renderSkills() {
-  const skillsGrid = document.querySelector(".skills-grid");
-  if (!skillsGrid || !userData.habilidades || !Array.isArray(userData.habilidades)) {
-    if (skillsGrid) {
-      skillsGrid.innerHTML = '<p style="color: #666; text-align: center;">No hay habilidades disponibles</p>';
-    }
+  if (!userData.habilidades || !Array.isArray(userData.habilidades)) {
+    skillsContainer.innerHTML = '<p style="color: #64748b; text-align: center; width: 100%;">No hay habilidades disponibles</p>';
     return;
   }
 
-  // Create skills HTML in one operation
+  // Create skills HTML
   const skillsHTML = userData.habilidades
     .map(skill => `<span class="skill-badge">${skill}</span>`)
     .join('');
   
-  skillsGrid.innerHTML = skillsHTML;
+  skillsContainer.innerHTML = skillsHTML;
 
-  // Add staggered fade-in animation
-  const skillBadges = skillsGrid.querySelectorAll(".skill-badge");
+  // Add staggered animation
+  const skillBadges = skillsContainer.querySelectorAll('.skill-badge');
   skillBadges.forEach((badge, index) => {
     setTimeout(() => {
-      badge.style.transition = "all 0.3s ease";
-      badge.style.opacity = "1";
-      badge.style.transform = "translateY(0)";
+      badge.classList.add('visible');
     }, index * 100);
   });
 }
 
-// Setup WhatsApp contact button with optimized URL generation
-function setupWhatsAppContact() {
-  const whatsappBtn = document.querySelector(".whatsapp-btn");
+// Update WhatsApp button
+function updateWhatsAppButton() {
+  const whatsappBtn = document.getElementById('whatsappBtn');
   if (!whatsappBtn) return;
 
   if (userData.whatsapp && userData.whatsapp.trim() !== '') {
-    whatsappBtn.style.display = "inline-flex";
-    
-    // Pre-generate WhatsApp URL for better performance
-    const cleanPhone = userData.whatsapp.replace(/\D/g, "");
-    const message = encodeURIComponent(`Hola ${userData.nome || 'profesional'}, me interesa contactarte para un proyecto.`);
+    const cleanPhone = userData.whatsapp.replace(/\D/g, '');
+    const message = encodeURIComponent(`Hola ${userData.nome || 'profesional'}, vi tu perfil en Samurai y me interesa contactarte para un proyecto.`);
     const whatsappUrl = `https://wa.me/${cleanPhone}?text=${message}`;
     
-    whatsappBtn.addEventListener("click", () => {
-      window.open(whatsappUrl, "_blank");
-    });
+    whatsappBtn.onclick = () => window.open(whatsappUrl, '_blank');
+    whatsappBtn.style.display = 'inline-flex';
   } else {
-    whatsappBtn.style.display = "none";
+    whatsappBtn.style.display = 'none';
   }
 }
 
-// Optimized metrics animation with requestAnimationFrame
-function animateMetrics() {
-  const scoreElement = document.querySelector(".metric-value.score");
-  const projectsElement = document.querySelector(".metric-value.projects");
+// Animate stats with smooth counting
+function animateStats() {
+  const statsElements = [
+    { id: 'statScore', target: parseFloat(userData.score) || 0, isDecimal: true },
+    { id: 'statProjects', target: parseInt(userData.projetos) || 0, isDecimal: false },
+    { id: 'statExperience', target: parseInt(userData.experiencia) || 0, isDecimal: false }
+  ];
 
-  if (scoreElement && userData.score) {
-    animateNumber(scoreElement, 0, parseFloat(userData.score), 1000, true);
-  }
-
-  if (projectsElement && userData.projetos) {
-    animateNumber(projectsElement, 0, parseInt(userData.projetos), 1500, false);
-  }
+  statsElements.forEach(stat => {
+    const element = document.getElementById(stat.id);
+    if (element) {
+      animateValue(element, 0, stat.target, 1500, stat.isDecimal);
+    }
+  });
 }
 
-// Optimized number animation with easing
-function animateNumber(element, start, end, duration, isDecimal) {
+// Generic value animation
+function animateValue(element, start, end, duration, isDecimal) {
   const startTime = performance.now();
-  const originalText = element.textContent;
-
-  function updateNumber(currentTime) {
+  
+  function updateValue(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
-
-    const current = start + (end - start) * easeOutCubic(progress);
-
+    
+    const easedProgress = 1 - Math.pow(1 - progress, 3);
+    const currentValue = start + (end - start) * easedProgress;
+    
     if (isDecimal) {
-      element.textContent = current.toFixed(1);
+      element.textContent = currentValue.toFixed(1);
     } else {
-      element.textContent = Math.floor(current).toString();
+      element.textContent = Math.floor(currentValue).toString();
     }
-
+    
     if (progress < 1) {
-      requestAnimationFrame(updateNumber);
-    } else {
-      element.textContent = originalText;
+      requestAnimationFrame(updateValue);
     }
   }
-
-  requestAnimationFrame(updateNumber);
+  
+  requestAnimationFrame(updateValue);
 }
 
-// Easing function for smooth animations
-function easeOutCubic(t) {
-  return 1 - Math.pow(1 - t, 3);
-}
-
-// Optimized scroll animations with Intersection Observer
+// Initialize scroll animations
 function initScrollAnimations() {
   const observerOptions = {
     threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
+    rootMargin: '0px 0px -50px 0px'
   };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-
-        // Trigger metrics animation for metrics section
-        if (entry.target.classList.contains("profile-metrics")) {
-          setTimeout(animateMetrics, 300);
+        entry.target.classList.add('visible');
+        
+        // Trigger stats animation
+        if (entry.target.classList.contains('stats-section')) {
+          setTimeout(animateStats, 300);
         }
-
-        // Stop observing once visible for better performance
+        
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  // Observe sections for animations
-  document.querySelectorAll(".profile-metrics, .profile-skills, .profile-contact").forEach((section) => {
-    section.classList.add("fade-in");
+  // Observe sections
+  document.querySelectorAll('.stats-section, .about-section, .skills-section, .contact-section').forEach(section => {
+    section.classList.add('fade-in');
     observer.observe(section);
   });
 }
 
-// Enhanced error handling
-function handleError(error) {
-  console.error("❌ Error en la aplicación:", error);
-
-  const container = document.querySelector(".profile-container");
-  const errorState = document.getElementById("errorState");
-  
-  if (container && errorState) {
-    // Hide main content and show error state
-    container.style.display = "none";
-    errorState.style.display = "block";
-  }
+// Show error state
+function showErrorState() {
+  document.getElementById('profileContainer').style.display = 'none';
+  document.getElementById('errorState').style.display = 'flex';
+  hideLoading();
 }
 
-// Hide loading screen with smooth transition
+// Hide loading screen
 function hideLoading() {
   const loading = document.getElementById('loading');
   const container = document.getElementById('profileContainer');
   
-  if (loading && container) {
-    loading.style.opacity = '0';
-    setTimeout(() => {
-      loading.style.display = 'none';
-      container.style.display = 'block';
-    }, 300);
-  }
+  loading.style.opacity = '0';
+  setTimeout(() => {
+    loading.style.display = 'none';
+    container.style.display = 'block';
+    container.classList.add('loaded');
+  }, 300);
 }
 
-// Optimize for WebView performance
+// Optimize for WebView
 function optimizeForWebView() {
-  // Disable text selection for better UX
+  // Disable text selection
   document.body.style.userSelect = 'none';
   document.body.style.webkitUserSelect = 'none';
   
@@ -303,7 +337,7 @@ function optimizeForWebView() {
   document.addEventListener('gesturechange', e => e.preventDefault());
   document.addEventListener('gestureend', e => e.preventDefault());
   
-  // Optimize images for WebView
+  // Optimize images
   document.querySelectorAll('img').forEach(img => {
     img.style.imageRendering = 'auto';
     img.loading = 'lazy';
@@ -312,94 +346,58 @@ function optimizeForWebView() {
   console.log('🚀 Optimizaciones para WebView aplicadas');
 }
 
-// Performance optimization: Preload images
-function preloadImages() {
-  if (userData.foto && userData.foto.trim() !== '') {
-    const img = new Image();
-    img.src = userData.foto;
-  }
-}
-
-// Main initialization function
+// Main initialization
 function initializeApp() {
   try {
-    console.log('�� Inicializando aplicación...');
-
-    // Show loading state
-    document.body.style.opacity = "0";
-    document.body.style.transition = "opacity 0.3s ease";
+    console.log('📱 Inicializando aplicación...');
 
     // Decode user data
     userData = decodeUserData();
 
-    // Render profile with decoded data
-    renderProfile();
+    // Update content
+    updateProfileContent();
 
-    // Initialize scroll animations
+    // Initialize animations
     initScrollAnimations();
 
     // Optimize for WebView
     optimizeForWebView();
 
-    // Preload images
-    setTimeout(preloadImages, 500);
-
-    // Show the page with smooth transition
+    // Hide loading and show content
     setTimeout(() => {
       hideLoading();
-      document.body.style.opacity = "1";
-      document.body.classList.add("loaded");
-    }, 800);
+    }, 1000);
 
     isLoaded = true;
     console.log('✅ Aplicación inicializada correctamente');
 
   } catch (error) {
     console.error('❌ Error inicializando aplicación:', error);
-    handleError(error);
+    showErrorState();
   }
 }
 
 // Event listeners
-document.addEventListener("DOMContentLoaded", initializeApp);
+document.addEventListener('DOMContentLoaded', initializeApp);
 
-// Handle window resize for responsive adjustments
-window.addEventListener("resize", () => {
-  if (isLoaded) {
-    // Re-trigger skills animation on layout changes
-    const skillsGrid = document.querySelector(".skills-grid");
-    if (skillsGrid) {
-      const badges = skillsGrid.querySelectorAll(".skill-badge");
-      badges.forEach((badge) => {
-        badge.style.transition = "all 0.3s ease";
-      });
-    }
-  }
-});
-
-// Handle page load completion
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
-});
-
-// Handle visibility change for performance optimization
-document.addEventListener("visibilitychange", () => {
+// Handle visibility change
+document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
-    console.log('👁️ Página oculta - pausando animaciones');
+    console.log('👁️ Página oculta');
   } else {
-    console.log('👁️ Página visible - reanudando animaciones');
+    console.log('👁️ Página visible');
   }
 });
 
 // Global error handling
-window.addEventListener("error", (e) => {
+window.addEventListener('error', (e) => {
   console.error('❌ Error global:', e.error);
   if (!isLoaded) {
-    handleError(e.error);
+    showErrorState();
   }
 });
 
-// Prevent context menu for better UX in WebView
+// Prevent context menu
 document.addEventListener('contextmenu', e => e.preventDefault());
 
 console.log('📋 Script cargado - Esperando DOM...');
