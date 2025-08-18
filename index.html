@@ -3,64 +3,270 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poster Samurai</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Removed Google Fonts to reduce external requests -->
+  <title>Samurai Profile</title>
+  <style>
+    /* Inline CSS for maximum efficiency in Flutter */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .profile-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .brand {
+      font-size: 16px;
+      font-weight: 700;
+      color: #635BFF;
+      letter-spacing: 2px;
+    }
+    
+    .profile-photo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #635BFF;
+    }
+    
+    .main-info {
+      text-align: left;
+      margin-bottom: 30px;
+    }
+    
+    .name {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    
+    .title {
+      font-size: 16px;
+      color: #635BFF;
+      font-weight: 600;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+    
+    .description {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .metric-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .metric-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .metric-value {
+      font-size: 28px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .metric-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .skills-section {
+      margin-bottom: 30px;
+    }
+    
+    .skills-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .skill-badge {
+      background: rgba(99, 91, 255, 0.2);
+      border: 1px solid #635BFF;
+      border-radius: 25px;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: white;
+    }
+    
+    .contact-btn {
+      width: 100%;
+      background: #4CAF50;
+      border: none;
+      border-radius: 25px;
+      padding: 15px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+    
+    .contact-btn:hover {
+      background: #45a049;
+    }
+    
+    @media (max-width: 480px) {
+      .profile-container {
+        margin: 10px;
+        padding: 20px;
+      }
+      
+      .name {
+        font-size: 28px;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="poster-container">
-    <!-- Removed all decorative background elements for performance -->
+  <div class="profile-container">
+    <header class="header">
+      <div class="brand">SAMURAI</div>
+      <img class="profile-photo" src="/placeholder.svg?height=60&width=60" alt="Foto de perfil" id="profilePhoto">
+    </header>
     
-    <!-- Contenido principal -->
-    <div class="poster-content">
-      <!-- Header simplificado -->
-      <header class="poster-header">
-        <div class="brand-mark">SAMURAI</div>
-        <div class="profile-photo-container">
-          <img class="profile-photo" src="/placeholder.svg" alt="Foto de perfil">
-          <!-- Removed photo overlay for performance -->
-        </div>
-      </header>
-      
-      <!-- Información principal -->
-      <section class="main-info">
-        <h1 class="profile-name"></h1>
-        <h2 class="profile-title"></h2>
-        <p class="profile-description"></p>
-      </section>
-      
-      <!-- Métricas simplificadas -->
-      <section class="artistic-metrics">
-        <div class="metric-card">
-          <span class="metric-icon">★</span>
-          <span class="metric-value score"></span>
-          <span class="metric-label">Rating</span>
-        </div>
-        <div class="metric-card">
-          <span class="metric-icon">🎯</span>
-          <span class="metric-value projects"></span>
-          <span class="metric-label">Proyectos</span>
-        </div>
-      </section>
-      
-      <!-- Habilidades simplificadas -->
-      <section class="creative-skills">
-        <h3 class="skills-title">Especialidades</h3>
-        <div class="skills-artistic-grid"></div>
-      </section>
-      
-      <!-- Contacto simplificado -->
-      <section class="artistic-contact">
-        <button class="whatsapp-artistic-btn" style="display: none;">
-          <span class="btn-icon">💬</span>
-          <span class="btn-text">Conectar</span>
-        </button>
-      </section>
-    </div>
+    <section class="main-info">
+      <h1 class="name" id="profileName">Samurai Freelancer</h1>
+      <h2 class="title" id="profileTitle">ESPECIALISTA DIGITAL</h2>
+      <p class="description" id="profileDescription">Profesional especializado en soluciones digitales innovadoras.</p>
+    </section>
     
-    <!-- Removed all decorative floating elements -->
+    <section class="metrics">
+      <div class="metric-card">
+        <span class="metric-icon">⭐</span>
+        <span class="metric-value" id="profileRating">5.0</span>
+        <span class="metric-label">RATING</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-icon">🎯</span>
+        <span class="metric-value" id="profileProjects">25</span>
+        <span class="metric-label">PROYECTOS</span>
+      </div>
+    </section>
+    
+    <section class="skills-section">
+      <h3 class="skills-title">ESPECIALIDADES</h3>
+      <div class="skills-grid" id="skillsContainer">
+        <div class="skill-badge">Desarrollo Web</div>
+        <div class="skill-badge">Diseño UI/UX</div>
+        <div class="skill-badge">Marketing Digital</div>
+        <div class="skill-badge">Consultoría</div>
+      </div>
+    </section>
+    
+    <button class="contact-btn" id="contactBtn">
+      💬 Conectar por WhatsApp
+    </button>
   </div>
-  
-  <script src="script.js"></script>
+
+  <script>
+    /* Minimal JavaScript for data decoding and rendering */
+    function base64UrlDecode(str) {
+      try {
+        str = str.replace(/-/g, '+').replace(/_/g, '/');
+        while (str.length % 4) str += '=';
+        return JSON.parse(atob(str));
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function renderProfile(data) {
+      if (!data) return;
+      
+      if (data.name) document.getElementById('profileName').textContent = data.name;
+      if (data.title) document.getElementById('profileTitle').textContent = data.title.toUpperCase();
+      if (data.description) document.getElementById('profileDescription').textContent = data.description;
+      if (data.rating) document.getElementById('profileRating').textContent = data.rating;
+      if (data.projects) document.getElementById('profileProjects').textContent = data.projects;
+      
+      if (data.photo) {
+        document.getElementById('profilePhoto').src = data.photo;
+      }
+      
+      if (data.skills && Array.isArray(data.skills)) {
+        const container = document.getElementById('skillsContainer');
+        container.innerHTML = '';
+        data.skills.forEach(skill => {
+          const badge = document.createElement('div');
+          badge.className = 'skill-badge';
+          badge.textContent = skill;
+          container.appendChild(badge);
+        });
+      }
+      
+      if (data.whatsapp) {
+        const btn = document.getElementById('contactBtn');
+        btn.style.display = 'block';
+        btn.onclick = () => window.open(`https://wa.me/${data.whatsapp}`, '_blank');
+      }
+    }
+
+    // Load data from URL or use defaults
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedData = urlParams.get('data');
+    
+    if (encodedData) {
+      const userData = base64UrlDecode(encodedData);
+      renderProfile(userData);
+    }
+  </script>
 </body>
 </html>
