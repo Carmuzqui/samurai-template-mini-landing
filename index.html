@@ -7,52 +7,71 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Loading mínimo -->
+  <!-- Loading minimalista -->
   <div id="loading" class="loading">
-    <div class="spinner"></div>
+    <div class="pulse"></div>
   </div>
 
-  <!-- Container principal -->
-  <div class="container" id="container">
-    <!-- Hero simple -->
-    <section class="hero" id="hero">
-      <img class="avatar" id="avatar" alt="Perfil">
+  <!-- Background dinámico -->
+  <div class="bg-pattern" id="bgPattern"></div>
+
+  <!-- Container principal con glassmorphism -->
+  <div class="glass-container" id="container">
+    
+    <!-- Hero con efecto flotante -->
+    <section class="hero-glass">
+      <div class="avatar-ring">
+        <img class="avatar" id="avatar" alt="Perfil">
+        <div class="status-dot"></div>
+      </div>
       <h1 class="name" id="name">Cargando...</h1>
-      <p class="title" id="title">Cargando...</p>
-      <div class="location" id="location">📍 Ubicación</div>
+      <div class="title-badge" id="title">Cargando...</div>
+      <div class="location-chip" id="location">📍 Ubicación</div>
     </section>
 
-    <!-- Stats simples -->
-    <section class="stats">
-      <div class="stat">
+    <!-- Stats con efecto neón sutil -->
+    <section class="stats-neon">
+      <div class="stat-glass">
+        <div class="stat-icon">⭐</div>
         <div class="stat-value" id="score">0</div>
-        <div class="stat-label">Calificación</div>
+        <div class="stat-label">Rating</div>
       </div>
-      <div class="stat">
+      <div class="stat-glass">
+        <div class="stat-icon">🚀</div>
         <div class="stat-value" id="projects">0</div>
         <div class="stat-label">Proyectos</div>
       </div>
-      <div class="stat">
+      <div class="stat-glass">
+        <div class="stat-icon">💎</div>
         <div class="stat-value" id="experience">0</div>
-        <div class="stat-label">Años Exp.</div>
+        <div class="stat-label">Años</div>
       </div>
     </section>
 
-    <!-- About simple -->
-    <section class="about">
-      <h2>Acerca de mí</h2>
-      <p id="description">Cargando descripción...</p>
+    <!-- About con efecto cristal -->
+    <section class="about-glass">
+      <div class="section-title">
+        <span class="title-icon">✨</span>
+        <h2>Acerca de mí</h2>
+      </div>
+      <p class="description" id="description">Cargando descripción...</p>
     </section>
 
-    <!-- Skills simples -->
-    <section class="skills">
-      <h2>Habilidades</h2>
-      <div class="skills-list" id="skillsList"></div>
+    <!-- Skills con efecto holográfico -->
+    <section class="skills-holo">
+      <div class="section-title">
+        <span class="title-icon">🎯</span>
+        <h2>Habilidades</h2>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
     </section>
 
-    <!-- Footer mínimo -->
-    <footer class="footer">
-      <p>Samurai Platform</p>
+    <!-- Footer minimalista -->
+    <footer class="footer-glass">
+      <div class="brand">
+        <span class="brand-icon">⚡</span>
+        <span>Samurai Platform</span>
+      </div>
     </footer>
   </div>
   
