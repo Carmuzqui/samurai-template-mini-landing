@@ -1,8 +1,20 @@
-/* Reset and base styles */
+/* Reset and base styles - Optimized for WebView */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -11,9 +23,44 @@ body {
   color: #2c3e50;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-/* Profile Container */
+body.loaded {
+  opacity: 1;
+}
+
+/* Loading State - Optimized */
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-size: 1.1rem;
+  color: #635bff;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #635bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Profile Container - Optimized */
 .profile-container {
   max-width: 800px;
   margin: 0 auto;
@@ -21,7 +68,7 @@ body {
   animation: fadeInUp 0.8s ease;
 }
 
-/* Profile Header */
+/* Profile Header - Optimized */
 .profile-header {
   background: white;
   border-radius: 24px;
@@ -31,6 +78,7 @@ body {
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
+  will-change: transform;
 }
 
 .profile-header::before {
@@ -44,6 +92,12 @@ body {
   z-index: 0;
 }
 
+.profile-photo-container {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+}
+
 .profile-photo {
   width: 180px;
   height: 180px;
@@ -52,9 +106,9 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   position: relative;
   z-index: 1;
-  margin-bottom: 1.5rem;
   object-fit: cover;
   transition: transform 0.3s ease;
+  background: #f8f9fa;
 }
 
 .profile-photo:hover {
@@ -68,6 +122,7 @@ body {
   margin-bottom: 0.5rem;
   position: relative;
   z-index: 1;
+  word-wrap: break-word;
 }
 
 .profile-title {
@@ -77,6 +132,7 @@ body {
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 1;
+  word-wrap: break-word;
 }
 
 .profile-description {
@@ -87,9 +143,10 @@ body {
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  word-wrap: break-word;
 }
 
-/* Profile Metrics */
+/* Profile Metrics - Optimized */
 .profile-metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -104,6 +161,7 @@ body {
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
+  will-change: transform;
 }
 
 .metric-item:hover {
@@ -130,7 +188,7 @@ body {
   font-weight: 500;
 }
 
-/* Profile Skills */
+/* Profile Skills - Optimized */
 .profile-skills {
   background: white;
   border-radius: 20px;
@@ -164,6 +222,9 @@ body {
   transition: all 0.3s ease;
   cursor: default;
   box-shadow: 0 2px 8px rgba(99, 91, 255, 0.3);
+  will-change: transform;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .skill-badge:hover {
@@ -171,7 +232,7 @@ body {
   box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
 }
 
-/* Profile Contact */
+/* Profile Contact - Optimized */
 .profile-contact {
   text-align: center;
 }
@@ -191,6 +252,7 @@ body {
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
+  will-change: transform;
 }
 
 .whatsapp-btn:hover {
@@ -204,28 +266,60 @@ body {
   height: 20px;
 }
 
-/* Loading Animation */
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* Error State */
+.error-message {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  color: #c53030;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error-message h3 {
+  margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  color: #635bff;
 }
 
-.loading::after {
-  content: "";
-  width: 20px;
-  height: 20px;
-  border: 2px solid #635bff;
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  margin-left: 1rem;
-  animation: spin 1s linear infinite;
+.error-message p {
+  margin-bottom: 1.5rem;
+  color: #666;
 }
 
-/* Animations */
+.retry-btn {
+  background: #635bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.retry-btn:hover {
+  background: #5a52ff;
+}
+
+/* Success State */
+.success-message {
+  background: #f0fff4;
+  border: 1px solid #9ae6b4;
+  color: #2f855a;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Animations - Optimized */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -238,8 +332,8 @@ body {
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
+  to { 
+    transform: rotate(360deg); 
   }
 }
 
@@ -254,7 +348,7 @@ body {
   transform: translateY(0);
 }
 
-/* Responsive Design */
+/* Responsive Design - Optimized */
 @media (max-width: 768px) {
   .profile-container {
     padding: 1rem 0.5rem;
@@ -341,24 +435,23 @@ body {
   }
 }
 
-/* Error State */
-.error-message {
-  background: #fff5f5;
-  border: 1px solid #fed7d7;
-  color: #c53030;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  margin: 1rem 0;
+/* WebView Optimizations */
+img {
+  image-rendering: auto;
+  max-width: 100%;
+  height: auto;
 }
 
-/* Success State */
-.success-message {
-  background: #f0fff4;
-  border: 1px solid #9ae6b4;
-  color: #2f855a;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  margin: 1rem 0;
+* {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Reduce motion for better performance */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
