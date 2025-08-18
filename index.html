@@ -3,330 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Samurai Profile</title>
-  <style>
-    /* Completely redesigned to match the clean white design from the image */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .profile-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    
-    .header {
-      background: linear-gradient(135deg, #635BFF 0%, #4CAF50 100%);
-      padding: 40px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-    
-    .profile-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid white;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-    
-    .header-info {
-      flex: 1;
-    }
-    
-    .name {
-      font-size: 36px;
-      font-weight: 700;
-      color: white;
-      margin-bottom: 8px;
-      line-height: 1.2;
-    }
-    
-    .title {
-      font-size: 18px;
-      color: #635BFF;
-      font-weight: 600;
-      background: rgba(255,255,255,0.9);
-      padding: 5px 15px;
-      border-radius: 20px;
-      display: inline-block;
-    }
-    
-    .content {
-      padding: 40px;
-    }
-    
-    .description {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #666;
-      margin-bottom: 40px;
-    }
-    
-    .metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-    
-    .metric-card {
-      background: white;
-      border-radius: 15px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      border: 1px solid #f0f0f0;
-    }
-    
-    .metric-icon {
-      font-size: 24px;
-      margin-bottom: 10px;
-      display: block;
-    }
-    
-    .metric-value {
-      font-size: 32px;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 8px;
-      color: #333;
-    }
-    
-    .metric-label {
-      font-size: 14px;
-      color: #666;
-      font-weight: 500;
-    }
-    
-    .rating-stars {
-      color: #FF9800;
-      font-size: 20px;
-      margin-bottom: 5px;
-    }
-    
-    .projects-icon {
-      color: #4CAF50;
-    }
-    
-    .skills-section {
-      margin-bottom: 30px;
-    }
-    
-    .skills-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
-    }
-    
-    .skill-badge {
-      background: #635BFF;
-      color: white;
-      border-radius: 25px;
-      padding: 12px 20px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    
-    .contact-btn {
-      width: 100%;
-      background: #4CAF50;
-      border: none;
-      border-radius: 25px;
-      padding: 15px;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      display: none;
-    }
-    
-    .contact-btn:hover {
-      background: #45a049;
-    }
-    
-    @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .profile-photo {
-        width: 100px;
-        height: 100px;
-      }
-      
-      .name {
-        font-size: 28px;
-      }
-      
-      .content {
-        padding: 30px 20px;
-      }
-      
-      .metrics {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <title>Poster Samurai</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="profile-container">
-    <header class="header">
-      <img class="profile-photo" src="/placeholder.svg?height=120&width=120" alt="Foto de perfil" id="profilePhoto">
-      <div class="header-info">
-        <h1 class="name" id="profileName">Nombre del Samurai</h1>
-        <h2 class="title" id="profileTitle">Especialidad Profesional</h2>
-      </div>
-    </header>
+  <div class="poster-container">
+    <!-- Elementos decorativos de fondo -->
+    <div class="bg-elements">
+      <div class="geometric-shape shape-1"></div>
+      <div class="geometric-shape shape-2"></div>
+      <div class="geometric-shape shape-3"></div>
+    </div>
     
-    <div class="content">
-      <p class="description" id="profileDescription">Descripción profesional del freelancer especializado en su área de expertise.</p>
+    <!-- Contenido principal -->
+    <div class="poster-content">
+      <!-- Header artístico -->
+      <header class="poster-header">
+        <div class="brand-mark">SAMURAI</div>
+        <div class="profile-photo-container">
+          <img class="profile-photo" src="/placeholder.svg" alt="Foto de perfil">
+          <div class="photo-overlay"></div>
+        </div>
+      </header>
       
-      <section class="metrics">
+      <!-- Información principal -->
+      <section class="main-info">
+        <h1 class="profile-name"></h1>
+        <h2 class="profile-title"></h2>
+        <p class="profile-description"></p>
+      </section>
+      
+      <!-- Métricas artísticas -->
+      <section class="artistic-metrics">
         <div class="metric-card">
-          <div class="rating-stars">★★★★★</div>
-          <span class="metric-value" id="profileRating">5.0</span>
-          <span class="metric-label">Calificación</span>
+          <span class="metric-icon">★</span>
+          <span class="metric-value score"></span>
+          <span class="metric-label">Rating</span>
         </div>
         <div class="metric-card">
-          <div class="projects-icon">🎁</div>
-          <span class="metric-value" id="profileProjects">0</span>
-          <span class="metric-label">Proyectos Completados</span>
+          <span class="metric-icon">🎯</span>
+          <span class="metric-value projects"></span>
+          <span class="metric-label">Proyectos</span>
         </div>
       </section>
       
-      <section class="skills-section">
+      <!-- Habilidades creativas -->
+      <section class="creative-skills">
         <h3 class="skills-title">Especialidades</h3>
-        <div class="skills-grid" id="skillsContainer">
-          <div class="skill-badge">Habilidad 1</div>
-          <div class="skill-badge">Habilidad 2</div>
-          <div class="skill-badge">Habilidad 3</div>
-        </div>
+        <div class="skills-artistic-grid"></div>
       </section>
       
-      <button class="contact-btn" id="contactBtn">
-        💬 Conectar por WhatsApp
-      </button>
+      <!-- Contacto artístico -->
+      <section class="artistic-contact">
+        <button class="whatsapp-artistic-btn" style="display: none;">
+          <span class="btn-icon">💬</span>
+          <span class="btn-text">Conectar</span>
+        </button>
+      </section>
+    </div>
+    
+    <!-- Elementos decorativos adicionales -->
+    <div class="decorative-elements">
+      <div class="floating-dot dot-1"></div>
+      <div class="floating-dot dot-2"></div>
+      <div class="floating-dot dot-3"></div>
     </div>
   </div>
-
-  <script>
-    function base64UrlDecode(str) {
-      try {
-        // Replace URL-safe characters
-        str = str.replace(/-/g, '+').replace(/_/g, '/');
-        // Add padding if needed
-        while (str.length % 4) {
-          str += '=';
-        }
-        const decoded = JSON.parse(atob(str));
-        return decoded;
-      } catch (e) {
-        console.error('Error decoding data:', e);
-        return null;
-      }
-    }
-
-    function renderProfile(data) {
-      if (!data) return;
-      
-      // Update basic info
-      if (data.name) document.getElementById('profileName').textContent = data.name;
-      if (data.title) document.getElementById('profileTitle').textContent = data.title;
-      if (data.description) document.getElementById('profileDescription').textContent = data.description;
-      
-      // Update rating with proper star display
-      if (data.rating) {
-        const rating = parseFloat(data.rating);
-        document.getElementById('profileRating').textContent = rating.toFixed(1);
-        
-        // Update stars based on rating
-        const starsContainer = document.querySelector('.rating-stars');
-        const fullStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 >= 0.5;
-        let starsHTML = '';
-        
-        for (let i = 0; i < 5; i++) {
-          if (i < fullStars) {
-            starsHTML += '★';
-          } else if (i === fullStars && hasHalfStar) {
-            starsHTML += '☆';
-          } else {
-            starsHTML += '☆';
-          }
-        }
-        starsContainer.innerHTML = starsHTML;
-      }
-      
-      if (data.projects) document.getElementById('profileProjects').textContent = data.projects;
-      
-      // Update photo
-      if (data.photo) {
-        document.getElementById('profilePhoto').src = data.photo;
-        document.getElementById('profilePhoto').alt = `Foto de ${data.name || 'perfil'}`;
-      }
-      
-      // Update skills
-      if (data.skills && Array.isArray(data.skills) && data.skills.length > 0) {
-        const container = document.getElementById('skillsContainer');
-        container.innerHTML = '';
-        data.skills.forEach(skill => {
-          const badge = document.createElement('div');
-          badge.className = 'skill-badge';
-          badge.textContent = skill;
-          container.appendChild(badge);
-        });
-      }
-      
-      // Update WhatsApp contact
-      if (data.whatsapp) {
-        const btn = document.getElementById('contactBtn');
-        btn.style.display = 'block';
-        btn.onclick = () => {
-          const phone = data.whatsapp.replace(/\D/g, ''); // Remove non-digits
-          window.open(`https://wa.me/${phone}`, '_blank');
-        };
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const encodedData = urlParams.get('data') || urlParams.get('d'); // Support both 'data' and 'd' parameters
-      
-      if (encodedData) {
-        const userData = base64UrlDecode(encodedData);
-        if (userData) {
-          renderProfile(userData);
-        }
-      }
-    });
-  </script>
+  
+  <script src="script.js"></script>
 </body>
 </html>
